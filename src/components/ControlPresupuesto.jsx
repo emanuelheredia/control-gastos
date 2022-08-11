@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 const ControlPresupuesto = ({ presupuesto, gastos }) => {
 	const [disponible, setDisponible] = useState(0);
 	const [gastado, setGastado] = useState(0);
+	const [porcentage, setPorcentage] = useState(0);
 
 	useEffect(() => {
 		const totalGastado = gastos.reduce(
@@ -10,8 +13,15 @@ const ControlPresupuesto = ({ presupuesto, gastos }) => {
 			0,
 		);
 		const totalDisponible = presupuesto - totalGastado;
+		const nuevoPorcetage = (
+			((presupuesto - totalDisponible) / presupuesto) *
+			100
+		).toFixed(2);
 		setGastado(totalGastado);
 		setDisponible(totalDisponible);
+		setTimeout(() => {
+			setPorcentage(nuevoPorcetage);
+		}, 1000);
 	}, [gastos]);
 
 	const formatearCantidad = (numero) => {
@@ -23,7 +33,15 @@ const ControlPresupuesto = ({ presupuesto, gastos }) => {
 	return (
 		<div className="contenedor-presupuesto sombra contenedor dos-columnas">
 			<div>
-				<p>Grafica aqui</p>
+				<CircularProgressbar
+					styles={buildStyles({
+						pathColor: "3B82F6",
+						trailColor: "F5F5F5",
+						textColor: "3B82F6",
+					})}
+					value={porcentage}
+					text={`${porcentage}% Gastado`}
+				/>
 			</div>
 			<div className="contenido-presupuesto">
 				<p>
