@@ -7,7 +7,7 @@ La APP permite extablecer un presupuesto sobre el cual se irán efetuando y alma
 
 ## Video Demo
 
-![Demonstration web] (src/assets/control-gastos.gif)
+![Demonstration web](src/assets/control-gastos.gif)
 
 ## Ejecutando este Proyecto
 
