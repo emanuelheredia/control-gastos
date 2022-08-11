@@ -18,6 +18,7 @@ function App() {
 	const [animarModal, setAnimarModal] = useState(false);
 	const [gastoEditar, setGastoEditar] = useState({});
 	const [filtro, setFiltro] = useState("");
+	const [gastosFiltrados, setGastosFiltrados] = useState([]);
 
 	useEffect(() => {
 		if (Object.keys(gastoEditar).length > 0) {
@@ -42,6 +43,15 @@ function App() {
 			setIsValidPrespuesto(true);
 		}
 	}, []);
+
+	useEffect(() => {
+		if (filtro) {
+			const gastosFiltrados = gastos.filter(
+				(gasto) => gasto.categoria === filtro,
+			);
+			setGastosFiltrados(gastosFiltrados);
+		}
+	}, [filtro]);
 
 	useEffect(() => {
 		if (filtro) {
@@ -87,6 +97,7 @@ function App() {
 				isValidPrespuesto={isValidPrespuesto}
 				setIsValidPrespuesto={setIsValidPrespuesto}
 				gastos={gastos}
+				setGastos={setGastos}
 			/>
 			{isValidPrespuesto && (
 				<>
@@ -96,6 +107,8 @@ function App() {
 							gastos={gastos}
 							setGastoEditar={setGastoEditar}
 							eliminarGasto={eliminarGasto}
+							filtro={filtro}
+							gastosFiltrados={gastosFiltrados}
 						/>
 					</main>
 					<div className="nuevo-gasto">
